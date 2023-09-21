@@ -1,0 +1,9 @@
+.right-tab-div{
+    display: flex;
+    flex-direction: column;
+    padding: 10vw;
+    width: 30vw;
+    background-color: khaki;
+    justify-content: space-evenly;
+    align-items: center;
+}

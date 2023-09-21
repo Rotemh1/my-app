@@ -1,0 +1,7 @@
+.left-tab-div{
+    display: flex;
+    flex-direction: column !important;
+    padding: 10vw;
+    width: 70vw;
+    background-color: aqua;
+}
