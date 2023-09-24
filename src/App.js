@@ -50,7 +50,7 @@ function App() {
 const columnCheck = (x, newMatrix) => {
     let sum = 0;
     for(let colcheck = 0; colcheck < yVal; colcheck ++){
-        sum += parseInt(newMatrix[colcheck][x]);
+        sum += !isNaN(parseInt(newMatrix[colcheck][x])) ? parseInt(newMatrix[colcheck][x]) : 0;
     }
     if (sum > sumVal){
         return false;
@@ -68,7 +68,7 @@ const columnIsValid = (x, isValid, clonedValidMatrix) => {
 const rowCheck = (y, newMatrix) => {
     let sum = 0;
     for(let rowchk= 0; rowchk < xVal; rowchk ++){
-        sum += parseInt(newMatrix[y][rowchk]);
+        sum += !isNaN(parseInt(newMatrix[y][rowchk])) ? parseInt(newMatrix[y][rowchk]) : 0;
     }
 
     if (sum > sumVal){
@@ -88,14 +88,14 @@ const slantCheck = (x,y, newMatrix) => {
     let rowchk = x;
     let colchk = y;
     while(rowchk < yVal && colchk < xVal){
-        sum += parseInt(newMatrix[rowchk][colchk]);
+        sum += !isNaN(parseInt(newMatrix[rowchk][colchk])) ? parseInt(newMatrix[rowchk][colchk]) : 0 ;
         rowchk++;
         colchk++;
     }
     rowchk = x-1;
     colchk = y-1;
     while(rowchk >= 0 && colchk >= 0){
-        sum += parseInt(newMatrix[rowchk][colchk]);
+        sum += !isNaN(parseInt(newMatrix[rowchk][colchk])) ? parseInt(newMatrix[rowchk][colchk]) : 0;
         rowchk--;
         colchk--;
     }
@@ -128,14 +128,14 @@ const slant2Check = (x,y, newMatrix) => {
     let rowchk = x;
     let colchk = y;
     while(rowchk < yVal && colchk >= 0){
-        sum += parseInt(newMatrix[rowchk][colchk]);
+        sum += !isNaN(parseInt(newMatrix[rowchk][colchk])) ? parseInt(newMatrix[rowchk][colchk]) : 0;
         rowchk++;
         colchk--;
     }
     rowchk = x-1;
     colchk = y+1;
     while(rowchk >= 0 && colchk < xVal){
-        sum += parseInt(newMatrix[rowchk][colchk]);
+        sum += !isNaN(parseInt(newMatrix[rowchk][colchk])) ? parseInt(newMatrix[rowchk][colchk]) : 0;
         rowchk--;
         colchk++;
     }
