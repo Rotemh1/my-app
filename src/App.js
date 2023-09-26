@@ -3,7 +3,7 @@ import { React, useState, useRef } from 'react';
 import _ from 'lodash';
 import RightTab from './Components/RightTab/RightTab';
 import LeftTab from './Components/LeftTab/LeftTab';
-
+import {columnCheck, rowCheck, slantCheck, slant2Check} from './Services/validations';
 
 function App() {
   //array size states
@@ -47,16 +47,7 @@ function App() {
     }
 }
 //check if column is valid
-const columnCheck = (x, newMatrix) => {
-    let sum = 0;
-    for(let colcheck = 0; colcheck < yVal; colcheck ++){
-        sum += !isNaN(parseInt(newMatrix[colcheck][x])) ? parseInt(newMatrix[colcheck][x]) : 0;
-    }
-    if (sum > sumVal){
-        return false;
-    };
-    return true;
-};
+
 const columnIsValid = (x, isValid, clonedValidMatrix) => {
     for(let colcheck = 0; colcheck < yVal; colcheck ++){
         colValmatrix.current[colcheck][x] = isValid;
@@ -65,17 +56,7 @@ const columnIsValid = (x, isValid, clonedValidMatrix) => {
     
 };
 //check if row is valid
-const rowCheck = (y, newMatrix) => {
-    let sum = 0;
-    for(let rowchk= 0; rowchk < xVal; rowchk ++){
-        sum += !isNaN(parseInt(newMatrix[y][rowchk])) ? parseInt(newMatrix[y][rowchk]) : 0;
-    }
 
-    if (sum > sumVal){
-        return false;
-    };
-    return true
-};
 const rowIsValid = (y, isValid, clonedValidMatrix) => {
     for(let rowchk= 0; rowchk < xVal; rowchk ++){
         rowValmatrix.current[y][rowchk] = isValid;
@@ -83,27 +64,6 @@ const rowIsValid = (y, isValid, clonedValidMatrix) => {
     }
 }
 //check if up right to bottom left slant is valid
-const slantCheck = (x,y, newMatrix) => {
-    let sum = 0;
-    let rowchk = x;
-    let colchk = y;
-    while(rowchk < yVal && colchk < xVal){
-        sum += !isNaN(parseInt(newMatrix[rowchk][colchk])) ? parseInt(newMatrix[rowchk][colchk]) : 0 ;
-        rowchk++;
-        colchk++;
-    }
-    rowchk = x-1;
-    colchk = y-1;
-    while(rowchk >= 0 && colchk >= 0){
-        sum += !isNaN(parseInt(newMatrix[rowchk][colchk])) ? parseInt(newMatrix[rowchk][colchk]) : 0;
-        rowchk--;
-        colchk--;
-    }
-    if (sum > sumVal){
-        return false;
-    };
-    return true;
-};
 const slantIsValid = (x,y,isValid, clonedValidMatrix) => {
     let rowchk = x;
     let colchk = y;
@@ -123,27 +83,6 @@ const slantIsValid = (x,y,isValid, clonedValidMatrix) => {
     }
 }
 //check if up left to bottom right slant is valid
-const slant2Check = (x,y, newMatrix) => {
-    let sum = 0;
-    let rowchk = x;
-    let colchk = y;
-    while(rowchk < yVal && colchk >= 0){
-        sum += !isNaN(parseInt(newMatrix[rowchk][colchk])) ? parseInt(newMatrix[rowchk][colchk]) : 0;
-        rowchk++;
-        colchk--;
-    }
-    rowchk = x-1;
-    colchk = y+1;
-    while(rowchk >= 0 && colchk < xVal){
-        sum += !isNaN(parseInt(newMatrix[rowchk][colchk])) ? parseInt(newMatrix[rowchk][colchk]) : 0;
-        rowchk--;
-        colchk++;
-    }
-    if (sum > sumVal){
-        return false;
-    };
-    return true;
-}
 const slant2IsValid = (x,y,isValid, clonedValidMatrix) =>{
     let rowchk = x;
     let colchk = y;
@@ -165,10 +104,10 @@ const slant2IsValid = (x,y,isValid, clonedValidMatrix) =>{
 //sum validation rutine
 const validationCheck = (x,y,newMatrix) => {
     const clonedValidMatrix = _.cloneDeep(validationMatrix);
-    columnIsValid(y, columnCheck(y, newMatrix), clonedValidMatrix);
-    rowIsValid(x, rowCheck(x, newMatrix), clonedValidMatrix);
-    slantIsValid(x,y,slantCheck(x,y, newMatrix), clonedValidMatrix);
-    slant2IsValid(x,y,slant2Check(x,y, newMatrix), clonedValidMatrix);
+    columnIsValid(y, columnCheck(y, newMatrix, yVal, sumVal), clonedValidMatrix);
+    rowIsValid(x, rowCheck(x, newMatrix, xVal, sumVal), clonedValidMatrix);
+    slantIsValid(x,y,slantCheck(x,y, newMatrix, xVal, yVal, sumVal), clonedValidMatrix);
+    slant2IsValid(x,y,slant2Check(x,y, newMatrix, xVal, yVal, sumVal), clonedValidMatrix);
     setValidationMatrix(clonedValidMatrix);
 };
 //================================================================================================
